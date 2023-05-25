@@ -51,7 +51,7 @@ CREATE TABLE Danh_Gia(
 	noiDungDanhGia nvarchar(300),
 	PRIMARY KEY(nguoiDanhGia)
 );
-GP
+GO
 ---Nhap Nguoi Dung
 CREATE PROCEDURE nhapNGuoiDung
 		@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@diaChi nvarchar(50),@quan nvarchar(15),@email nvarchar(50)
