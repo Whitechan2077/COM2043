@@ -48,7 +48,7 @@ CREATE TABLE Danh_Gia(
 	danhGia tinyint CHECK(danhGia>0) NOT NULL,
 	noiDungDanhGia nvarchar(300)
 );
--------------------------------------------------------
+---Nhap Nguoi Dung
 CREATE PROCEDURE nhapNGuoiDung
 		@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@diaChi nvarchar(50),@quan nvarchar(15),@email nvarchar(50)
 	AS
@@ -56,4 +56,16 @@ CREATE PROCEDURE nhapNGuoiDung
 	INSERT INTO Nguoi_Dung(tenNguoiDung,gioiTinh,sdt,diaChi,quan,email)
 		VALUES(@tenNguoiDung,@gioiTinh,@sdt,@diaChi,@quan,@email)
 	END
+---Nhap loai nha
+CREATE PROCEDURE nhapLoaiNha
+		@tenLoai nvarchar(20)
+	AS
+	BEGIN
+		INSERT INTO LOAI_NHA(tenLoai)
+		VALUES(@tenLoai)
+	END
+--Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
+EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
+EXEC nhapNGuoiDung N'Nguyễn Minh Đức',0,'0597767819',N'Sứ giả',N'Hoàng Mai','duc8198@gmail.com';
+EXEC nhapNGuoiDung N'Nguyễn Đức Chung',0,'0397757819',N'Yển Khê',N'Thanh Ba','NguyenducChung@gmail.com';
