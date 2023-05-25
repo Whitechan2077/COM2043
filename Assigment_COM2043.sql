@@ -46,7 +46,8 @@ GO
 CREATE TABLE Danh_Gia(
 	nguoiDanhGia int CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY(nguoiDanhGia) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
 	danhGia tinyint CHECK(danhGia>0) NOT NULL,
-	noiDungDanhGia nvarchar(300)
+	noiDungDanhGia nvarchar(300),
+	PRIMARY KEY(nguoiDanhGia)
 );
 ---Nhap Nguoi Dung
 CREATE PROCEDURE nhapNGuoiDung
@@ -64,6 +65,14 @@ CREATE PROCEDURE nhapLoaiNha
 		INSERT INTO LOAI_NHA(tenLoai)
 		VALUES(@tenLoai)
 	END
+--Nhap Danh gia
+CREATE PROCEDURE nhapDanhGia
+		@nguoiDanhGia int,@danhGia tinyint,@noiDungDanhGia nvarchar(300)
+	AS
+	BEGIN
+	INSERT INTO Danh_Gia
+		VALUES(@nguoiDanhGia,@danhGia,@noiDungDanhGia)
+	END
 --Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
 EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
@@ -75,9 +84,9 @@ EXEC nhapNGuoiDung N'Nguyễn Thanh Long',0,'0397744811',N'Giao Thủy',N'Nam Đ
 EXEC nhapNGuoiDung N'Chu Ngọc Anh',0,'0397742811',N'Lang Sơn',N'Hạ Hòa','nAnh@gmail.com';
 EXEC nhapNGuoiDung N'Trần Đại Quang',0,'0297744811',N'Thụy Khuê',N'Tây Hồ','Long@gmail.com';
 EXEC nhapNGuoiDung N'Nguyễn Xuân Phúc',0,'0396744811',N'Quế Phú',N'Quế Sơn','Long@gmail.com';
+EXEC nhapNGuoiDung N'Cù Thị Hậu',1,'0396344811',N'Hạ Hòa',N'Phú Thọ','Hau@gmail.com';
 EXEC nhapLoaiNha 'Villa';
 EXEC nhapLoaiNha N'Chung cư';
 EXEC nhapLoaiNha N'Biệt Thự';
 EXEC nhapLoaiNha N'Nhà Cấp 4';
-
-
+EXEC nhapDanhGia ;
