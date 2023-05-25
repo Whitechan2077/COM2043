@@ -45,6 +45,7 @@ CREATE TABLE Nha_Tro(
 GO
 CREATE TABLE Danh_Gia(
 	nguoiDanhGia int CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY(nguoiDanhGia) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
+	maNhaTro int CONSTRAINT FK_maNha FOREIGN KEY(maNhaTro) REFERENCES Nha_Tro(maNhaTro),
 	danhGia tinyint CHECK(danhGia>0) NOT NULL,
 	noiDungDanhGia nvarchar(300),
 	PRIMARY KEY(nguoiDanhGia)
@@ -89,4 +90,4 @@ EXEC nhapLoaiNha 'Villa';
 EXEC nhapLoaiNha N'Chung cư';
 EXEC nhapLoaiNha N'Biệt Thự';
 EXEC nhapLoaiNha N'Nhà Cấp 4';
-EXEC nhapDanhGia ;
+EXEC nhapDanhGia 4,0,;
