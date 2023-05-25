@@ -69,3 +69,5 @@ EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam T�
 EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
 EXEC nhapNGuoiDung N'Nguyễn Minh Đức',0,'0597767819',N'Sứ giả',N'Hoàng Mai','duc8198@gmail.com';
 EXEC nhapNGuoiDung N'Nguyễn Đức Chung',0,'0397757819',N'Yển Khê',N'Thanh Ba','NguyenducChung@gmail.com';
+EXEC nhapNGuoiDung N'Trịnh Văn Quyết ',0,'0397757811',N'Vĩnh Thịnh',N'Vĩnh Tường','XuanQuyet@gmail.com';
+EXEC nhapNGuoiDung N'Nguyễn Tấn Dũng',0,'0397747811',N'Vĩnh Thịnh',N'Vĩnh Tường','XuanQuyet@gmail.com';
