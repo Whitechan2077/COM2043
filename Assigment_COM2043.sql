@@ -83,8 +83,8 @@ EXEC nhapNGuoiDung N'Trịnh Văn Quyết ',0,'0397757811',N'Vĩnh Thịnh',N'V�
 EXEC nhapNGuoiDung N'Nguyễn Tấn Dũng',0,'0397747811',N'Cà Mau',N'Cà Mau','XuanQuyet@gmail.com';
 EXEC nhapNGuoiDung N'Nguyễn Thanh Long',0,'0397744811',N'Giao Thủy',N'Nam Định','Long@gmail.com';
 EXEC nhapNGuoiDung N'Chu Ngọc Anh',0,'0397742811',N'Lang Sơn',N'Hạ Hòa','nAnh@gmail.com';
-EXEC nhapNGuoiDung N'Trần Đại Quang',0,'0297744811',N'Thụy Khuê',N'Tây Hồ','Long@gmail.com';
-EXEC nhapNGuoiDung N'Nguyễn Xuân Phúc',0,'0396744811',N'Quế Phú',N'Quế Sơn','Long@gmail.com';
+EXEC nhapNGuoiDung N'Trần Đại Quang',0,'0297744811',N'Thụy Khuê',N'Tây Hồ','quang@gmail.com';
+EXEC nhapNGuoiDung N'Nguyễn Xuân Phúc',0,'0396744811',N'Quế Phú',N'Quế Sơn','phuc@gmail.com';
 EXEC nhapNGuoiDung N'Cù Thị Hậu',1,'0396344811',N'Hạ Hòa',N'Phú Thọ','Hau@gmail.com';
 EXEC nhapLoaiNha 'Villa';
 EXEC nhapLoaiNha N'Chung cư';
