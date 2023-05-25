@@ -36,8 +36,9 @@ CREATE TABLE Nha_Tro(
 	tenNhaTro nvarchar(50) NOT NULL,
 	maLoai int CONSTRAINT FK_maLoai FOREIGN KEY (maLoai) REFERENCES LOAI_NHA(maLoai) NOT NULL,
 	dientich float CHECK (dientich>0) NOT NULL,
-	giaTien int check(giaTien>0)  NOT NULL, 
+	giaTien float check(giaTien>0)  NOT NULL, 
 	diaChi nvarchar(50) CHECK(LEN(diaChi)>5) NOT NULL,
+	quan nvarchar(50) CHECK(LEN(quan)>2) NOT NULL,
 	moTa nvarchar(300),
 	ngayDang date NOT NULL,
 	nguoiLienHe int CONSTRAINT FK_maNguoiDung FOREIGN KEY(nguoiLienHe) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
@@ -50,6 +51,7 @@ CREATE TABLE Danh_Gia(
 	noiDungDanhGia nvarchar(300),
 	PRIMARY KEY(nguoiDanhGia)
 );
+GP
 ---Nhap Nguoi Dung
 CREATE PROCEDURE nhapNGuoiDung
 		@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@diaChi nvarchar(50),@quan nvarchar(15),@email nvarchar(50)
@@ -58,6 +60,7 @@ CREATE PROCEDURE nhapNGuoiDung
 	INSERT INTO Nguoi_Dung(tenNguoiDung,gioiTinh,sdt,diaChi,quan,email)
 		VALUES(@tenNguoiDung,@gioiTinh,@sdt,@diaChi,@quan,@email)
 	END
+GO
 ---Nhap loai nha
 CREATE PROCEDURE nhapLoaiNha
 		@tenLoai nvarchar(20)
@@ -66,6 +69,7 @@ CREATE PROCEDURE nhapLoaiNha
 		INSERT INTO LOAI_NHA(tenLoai)
 		VALUES(@tenLoai)
 	END
+GO
 --Nhap Danh gia
 CREATE PROCEDURE nhapDanhGia
 		@nguoiDanhGia int,@danhGia tinyint,@noiDungDanhGia nvarchar(300)
@@ -74,6 +78,83 @@ CREATE PROCEDURE nhapDanhGia
 	INSERT INTO Danh_Gia
 		VALUES(@nguoiDanhGia,@danhGia,@noiDungDanhGia)
 	END
+--Tim kiem theo quan
+GO
+CREATE PROCEDURE timKiemTheoQuan
+	@quan nvarchar(20)
+AS
+BEGIN
+	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
+		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
+		Nha_Tro.moTa AS 'Mô tả',
+		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
+		CASE
+			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
+			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
+		END AS N'Người Giới Thiệu'
+	FROM Nha_Tro
+	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung
+	WHERE Nha_Tro.quan = @quan;
+END
+GO
+--Tim kiem theo Khoang tien
+CREATE PROCEDURE timKiemTheoKhoangTien
+	@gia1 float , @gia2 float
+AS
+BEGIN
+	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
+		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
+		Nha_Tro.moTa AS 'Mô tả',
+		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
+		CASE
+			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
+			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
+		END AS N'Người Giới Thiệu'
+	FROM Nha_Tro
+	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung
+	WHERE Nha_Tro.giaTien BETWEEN @gia1 AND @gia2
+END
+GO
+--Tim kiem theo khoang Dien tich
+CREATE PROCEDURE timKiemTheoKhoangDienTich
+	@dienTich1 float, @dienTich2 float
+AS
+BEGIN
+	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
+		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
+		Nha_Tro.moTa AS 'Mô tả',
+		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
+		CASE
+			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
+			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
+		END AS N'Người Giới Thiệu'
+	FROM Nha_Tro
+	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung
+	WHERE Nha_Tro.giaTien BETWEEN @dienTich1 AND @dienTich2
+END
+GO
+--tim kiem theo loai nha tro
+CREATE PROCEDURE timKiemTheoLoaiNhaTro
+	@maLoai int
+AS
+BEGIN
+	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
+		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
+		Nha_Tro.moTa AS 'Mô tả',
+		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
+		CASE
+			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
+			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
+		END AS N'Người Giới Thiệu'
+	FROM LOAI_NHA JOIN Nha_Tro ON LOAI_NHA.maLoai = Nha_Tro.maLoai
+	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung 
+	WHERE Nha_Tro.maLoai = @maLoai
+END
+GO
 --Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
 EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
@@ -90,4 +171,3 @@ EXEC nhapLoaiNha 'Villa';
 EXEC nhapLoaiNha N'Chung cư';
 EXEC nhapLoaiNha N'Biệt Thự';
 EXEC nhapLoaiNha N'Nhà Cấp 4';
-EXEC nhapDanhGia 4,0,;
