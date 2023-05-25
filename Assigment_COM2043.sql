@@ -19,6 +19,7 @@ CREATE TABLE LOAI_NHA(
 GO
 CREATE TABLE Nha_Tro(
 	maNhaTro int IDENTITY(1,1) PRIMARY KEY,
+	tenNhaTro nvarchar(50) NOT NULL,
 	maLoai int CONSTRAINT FK_maLoai FOREIGN KEY (maLoai) REFERENCES LOAI_NHA(maLoai) NOT NULL,
 	dientich float CHECK (dientich>0) NOT NULL,
 	giaTien int check(giaTien>0)  NOT NULL, 
