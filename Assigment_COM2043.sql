@@ -1,4 +1,18 @@
-CREATE DATABASE Thong_Tin_Nha_Tro;
+CREATE DATABASE Thong_Tin_Nha_Tro
+ON(
+NAME = ThongTinNhaTro,
+FILENAME = 'D:\ThongTinNhaTro.mdf',
+SIZE = 5,
+MAXSIZE = 20,
+GROWTH = 5
+)
+LOG ON(
+NAME = ThongTinNhaTro_LOG,
+FILENAME = 'D:\ThongTinNhaTro.ldf',
+SIZE = 5,
+MAXSIZE = 20,
+GROWTH = 5
+);
 GO
 USE Thong_Tin_Nha_Tro;
 GO
