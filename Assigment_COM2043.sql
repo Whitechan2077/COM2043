@@ -6,7 +6,7 @@ CREATE TABLE Nguoi_Dung(
 	maNguoiDung int IDENTITY(1,1) PRIMARY KEY,
 	tenNguoiDung nvarchar(30) NOT NULL,
 	gioiTinh tinyint NOT NULL,
-	sdt nvarchar(10) NOT NULL,
+	sdt nvarchar(10) NOT NULL UNIQUE,
 	diaChi nvarchar(50) CHECK(LEN(diaChi)>5) NOT NULL,
 	quan nvarchar(15) CHECK(LEN(quan)>3) NOT NULL,
 	email nvarchar(50) NOT NULL,
@@ -34,7 +34,4 @@ CREATE TABLE Danh_Gia(
 	danhGia tinyint CHECK(danhGia>0) NOT NULL,
 	noiDungDanhGia nvarchar(300)
 );
-GO
 -------------------------------------------------------
-ALTER TABLE Nguoi_Dung
- ALTER COLUMN sdt nvarchar(10) NOT NULL UNIQUE,
