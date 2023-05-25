@@ -70,4 +70,14 @@ EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam 
 EXEC nhapNGuoiDung N'Nguyễn Minh Đức',0,'0597767819',N'Sứ giả',N'Hoàng Mai','duc8198@gmail.com';
 EXEC nhapNGuoiDung N'Nguyễn Đức Chung',0,'0397757819',N'Yển Khê',N'Thanh Ba','NguyenducChung@gmail.com';
 EXEC nhapNGuoiDung N'Trịnh Văn Quyết ',0,'0397757811',N'Vĩnh Thịnh',N'Vĩnh Tường','XuanQuyet@gmail.com';
-EXEC nhapNGuoiDung N'Nguyễn Tấn Dũng',0,'0397747811',N'Vĩnh Thịnh',N'Vĩnh Tường','XuanQuyet@gmail.com';
+EXEC nhapNGuoiDung N'Nguyễn Tấn Dũng',0,'0397747811',N'Cà Mau',N'Cà Mau','XuanQuyet@gmail.com';
+EXEC nhapNGuoiDung N'Nguyễn Thanh Long',0,'0397744811',N'Giao Thủy',N'Nam Định','Long@gmail.com';
+EXEC nhapNGuoiDung N'Chu Ngọc Anh',0,'0397742811',N'Lang Sơn',N'Hạ Hòa','nAnh@gmail.com';
+EXEC nhapNGuoiDung N'Trần Đại Quang',0,'0297744811',N'Thụy Khuê',N'Tây Hồ','Long@gmail.com';
+EXEC nhapNGuoiDung N'Nguyễn Xuân Phúc',0,'0396744811',N'Quế Phú',N'Quế Sơn','Long@gmail.com';
+EXEC nhapLoaiNha 'Villa';
+EXEC nhapLoaiNha N'Chung cư';
+EXEC nhapLoaiNha N'Biệt Thự';
+EXEC nhapLoaiNha N'Nhà Cấp 4';
+
+
