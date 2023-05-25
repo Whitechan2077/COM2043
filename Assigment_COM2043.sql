@@ -47,7 +47,7 @@ GO
 CREATE TABLE Danh_Gia(
 	nguoiDanhGia int CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY(nguoiDanhGia) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
 	maNhaTro int CONSTRAINT FK_maNha FOREIGN KEY(maNhaTro) REFERENCES Nha_Tro(maNhaTro),
-	danhGia tinyint CHECK(danhGia>0) NOT NULL,
+	danhGia tinyint NOT NULL,
 	noiDungDanhGia nvarchar(300),
 	PRIMARY KEY(nguoiDanhGia)
 );
@@ -155,6 +155,44 @@ BEGIN
 	WHERE Nha_Tro.maLoai = @maLoai
 END
 GO
+--tim kiem theo khoang nam
+CREATE PROCEDURE timKiemTheoLoaiKhoangNam
+	@nam1 int,@nam2 int
+AS
+BEGIN
+	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
+		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
+		Nha_Tro.moTa AS 'Mô tả',
+		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
+		CASE
+			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
+			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
+		END AS N'Người Giới Thiệu'
+	FROM LOAI_NHA JOIN Nha_Tro ON LOAI_NHA.maLoai = Nha_Tro.maLoai
+	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung 
+	WHERE YEAR(Nha_Tro.ngayDang) BETWEEN @nam1 AND @nam2
+END
+GO
+--Ham tra ve ma nguoi dung
+CREATE PROCEDURE timMaNguoiDung 
+	@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@quan nvarchar(15),@diaChi nvarchar(50),@email nvarchar(50)
+	AS
+	    DECLARE @maNguoiDung int
+		SELECT @maNguoiDung=maNguoiDung  FROM Nguoi_Dung WHERE tenNguoiDung like @tenNguoiDung AND gioiTinh = @gioiTinh AND sdt =@sdt AND diaChi = @diaChi AND quan =@quan AND email = @email
+		RETURN @maNguoiDung
+GO
+--Dem so like cua nha Tro
+CREATE PROCEDURE demSoLike
+	@maNhaTro int
+	AS
+		BEGIN
+			SELECT COUNT(Danh_Gia.danhGia),Nha_Tro.tenNhaTro FROM Nha_Tro JOIN Danh_Gia ON Nha_Tro.maNhaTro = Danh_Gia.maNhaTro
+			GROUP BY Nha_Tro.tenNhaTro
+			HAVING Danh_Gia.danhGia = 0
+		END
+GO
+--
 --Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
 EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
