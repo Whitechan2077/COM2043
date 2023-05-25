@@ -192,7 +192,17 @@ CREATE PROCEDURE demSoLike
 			HAVING Danh_Gia.danhGia = 0
 		END
 GO
---
+--Tra ve danh gia cua nha tro
+CREATE PROCEDURE hienThiDanhGia
+	@maNhaTro int
+	AS
+		BEGIN
+			SELECT Nha_Tro.maNhaTro,Nguoi_Dung.tenNguoiDung,Danh_Gia.danhGia,Danh_Gia.noiDungDanhGia
+				FROM Nguoi_Dung 
+				JOIN Danh_Gia ON Nguoi_Dung.maNguoiDung = Danh_Gia.nguoiDanhGia 
+				JOIN Nha_Tro ON Nha_Tro.maNhaTro = Danh_Gia.maNhaTro
+		END
+GO
 --Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
 EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
