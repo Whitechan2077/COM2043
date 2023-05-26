@@ -205,6 +205,7 @@ CREATE PROCEDURE hienThiDanhGia
 GO
 --Xoa nha theo so dislike
 CREATE PROCEDURE xoaTheoSoDisLike
+	@soDislike int
 	AS
 	BEGIN
 	END
