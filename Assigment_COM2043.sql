@@ -203,6 +203,12 @@ CREATE PROCEDURE hienThiDanhGia
 				JOIN Nha_Tro ON Nha_Tro.maNhaTro = Danh_Gia.maNhaTro
 		END
 GO
+--Xoa nha theo so dislike
+CREATE PROCEDURE xoaTheoSoDisLike
+	AS
+	BEGIN
+	END
+GO
 --Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
 EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
