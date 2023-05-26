@@ -208,6 +208,7 @@ CREATE PROCEDURE xoaTheoSoDisLike
 	@soDislike int
 	AS
 	BEGIN
+
 	END
 GO
 --Thuc thi STRORE PROCEDURE
