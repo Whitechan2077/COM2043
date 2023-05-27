@@ -42,6 +42,7 @@ CREATE TABLE Nha_Tro(
 	moTa nvarchar(300),
 	ngayDang date NOT NULL,
 	nguoiLienHe int CONSTRAINT FK_maNguoiDung FOREIGN KEY(nguoiLienHe) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
+	trangThai tinyint
 );
 GO
 CREATE TABLE Danh_Gia(
@@ -67,7 +68,13 @@ CREATE TABLE Nha_Da_Cho_Thue(
 );
 GO
 CREATE TABLE Danh_Muc_Yeu_Thich(
-	maDanhMuc int PRIMARY KEY,
+	maDanhMuc int IDENTITY(1,1) PRIMARY KEY,
+	maNguoiDung int CONSTRAINT FK_nguoi_dung_yeu_thich FOREIGN KEY (maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung)
+);
+CREATE TABLE Nha_Duoc_Yeu_Thich(
+	maDanhMuc int CONSTRAINT FK_MaDanhMuc FOREIGN KEY (maDanhMuc) REFERENCES Danh_Muc_Yeu_Thich(maDanhMuc),
+	maNhaTro int CONSTRAINT FK_NhaDuocYeuThic FOREIGN KEY (maNhaTro) REFERENCES Nha_Tro(maNhaTro),
+	PRIMARY KEY(maDanhMuc,maNhaTro)
 );
 GO
 ---Nhap Nguoi Dung
