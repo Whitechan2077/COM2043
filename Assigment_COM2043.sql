@@ -45,32 +45,35 @@ CREATE TABLE Nha_Tro(
 	trangThai tinyint
 );
 GO
-CREATE TABLE Danh_Gia(
-	nguoiDanhGia int CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY(nguoiDanhGia) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
-	maNhaTro int CONSTRAINT FK_maNha FOREIGN KEY(maNhaTro) REFERENCES Nha_Tro(maNhaTro),
-	danhGia tinyint NOT NULL,
-	noiDungDanhGia nvarchar(300),
-	PRIMARY KEY(nguoiDanhGia)
+CREATE TABLE Nguoi_Thue_Nha (
+	maNguoiDung INT CONSTRAINT FK_maNguoiThueNha FOREIGN KEY (maNguoiDung) REFERENCES Nguoi_Dung (maNguoiDung) NOT NULL,
+	maThue INT IDENTITY(1,1),
+	PRIMARY KEY (maNguoiDung ,maThue)
 );
 GO
-CREATE TABLE Nguoi_Thue_Nha(
-	maNguoiDung int CONSTRAINT FK_maNguoiThueNha FOREIGN KEY(maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
-	maThue int IDENTITY(1,1) PRIMARY KEY 
+CREATE TABLE Nha_Da_Cho_Thue (
+	maThue INT CONSTRAINT FK_maThueNha FOREIGN KEY (maThue) REFERENCES Nguoi_Thue_Nha (maThue) NOT NULL,
+	maNhaTro INT CONSTRAINT FK_maNhaTroaDaChoThue FOREIGN KEY (maNhaTro) REFERENCES Nha_tro (maNhaTro) NOT NULL,
+	ngayChoThue DATE NOT NULL,
+	ngayHetHanChoThue DATE,
+	giaTien FLOAT CHECK (giaTien > 0) NOT NULL, 
+	PRIMARY KEY (maThue, maNhaTro)
 );
-GO
-CREATE TABLE Nha_Da_Cho_Thue(
-	maThue int CONSTRAINT FK_maThue FOREIGN KEY (maThue) REFERENCES Nguoi_Thue_Nha(maThue) NOT NULL,
-	maNhaTro int CONSTRAINT FK_maNhaTroaDaChoThue FOREIGN KEY (maNhaTro) REFERENCES Nha_tro(maNhaTro) NOT NULL,
-	ngayChoThue date NOT NULL,
-	ngayHetHanChoThue date,
-	giaTien float check(giaTien>0)  NOT NULL, 
-	PRIMARY KEY (maThue,maNhaTro)
+
+CREATE TABLE Danh_Gia (
+	nguoiDanhGia INT CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY (nguoiDanhGia) REFERENCES Nguoi_Thue_Nha (maNguoiDung) NOT NULL,
+	maNhaTro INT CONSTRAINT FK_maNha FOREIGN KEY (maNhaTro) REFERENCES Nha_Da_Cho_Thue (maNhaTro),
+	danhGia TINYINT CHECK (danhGia BETWEEN 1 AND 5) NOT NULL,
+	noiDungDanhGia NVARCHAR(300),
+	PRIMARY KEY (nguoiDanhGia)
 );
+
 GO
 CREATE TABLE Danh_Muc_Yeu_Thich(
 	maDanhMuc int IDENTITY(1,1) PRIMARY KEY,
 	maNguoiDung int CONSTRAINT FK_nguoi_dung_yeu_thich FOREIGN KEY (maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
 );
+GO
 CREATE TABLE Nha_Duoc_Yeu_Thich(
 	maDanhMuc int CONSTRAINT FK_MaDanhMuc FOREIGN KEY (maDanhMuc) REFERENCES Danh_Muc_Yeu_Thich(maDanhMuc) NOT NULL,
 	maNhaTro int CONSTRAINT FK_NhaDuocYeuThic FOREIGN KEY (maNhaTro) REFERENCES Nha_Tro(maNhaTro),
