@@ -55,7 +55,7 @@ CREATE TABLE Danh_Gia(
 GO
 CREATE TABLE Nguoi_Thue_Nha(
 	maNguoiDung int CONSTRAINT FK_maNguoiThueNha FOREIGN KEY(maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
-	maThue int IDENTITY(1,1) PRIMARY KEY
+	maThue int IDENTITY(1,1) PRIMARY KEY 
 );
 GO
 CREATE TABLE Nha_Da_Cho_Thue(
@@ -69,10 +69,10 @@ CREATE TABLE Nha_Da_Cho_Thue(
 GO
 CREATE TABLE Danh_Muc_Yeu_Thich(
 	maDanhMuc int IDENTITY(1,1) PRIMARY KEY,
-	maNguoiDung int CONSTRAINT FK_nguoi_dung_yeu_thich FOREIGN KEY (maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung)
+	maNguoiDung int CONSTRAINT FK_nguoi_dung_yeu_thich FOREIGN KEY (maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
 );
 CREATE TABLE Nha_Duoc_Yeu_Thich(
-	maDanhMuc int CONSTRAINT FK_MaDanhMuc FOREIGN KEY (maDanhMuc) REFERENCES Danh_Muc_Yeu_Thich(maDanhMuc),
+	maDanhMuc int CONSTRAINT FK_MaDanhMuc FOREIGN KEY (maDanhMuc) REFERENCES Danh_Muc_Yeu_Thich(maDanhMuc) NOT NULL,
 	maNhaTro int CONSTRAINT FK_NhaDuocYeuThic FOREIGN KEY (maNhaTro) REFERENCES Nha_Tro(maNhaTro),
 	PRIMARY KEY(maDanhMuc,maNhaTro)
 );
