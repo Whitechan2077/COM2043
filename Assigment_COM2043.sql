@@ -52,6 +52,18 @@ CREATE TABLE Danh_Gia(
 	PRIMARY KEY(nguoiDanhGia)
 );
 GO
+CREATE TABLE Nguoi_Thue_Nha(
+	maNguoiDung int CONSTRAINT FK_maNguoiDung FOREIGN KEY(maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
+	maThue int IDENTITY(1,1) PRIMARY KEY
+);
+GO
+CREATE TABLE Nha_Cho_Thue(
+	maThue int CONSTRAINT FK_maThue FOREIGN KEY (maThue) REFERENCES Nguoi_Thue_Nha(maThue) NOT NULL,
+	maNhaTro int CONSTRAINT FK_maNhaTro FOREIGN KEY (maNhaTro) REFERENCES Nha_tro(maNhaTro) NOT NULL,
+	ngayChoThue date NOT NULL,
+	ngayHetHanChoThue date,
+);
+GO
 ---Nhap Nguoi Dung
 CREATE PROCEDURE nhapNGuoiDung
 		@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@diaChi nvarchar(50),@quan nvarchar(15),@email nvarchar(50)
