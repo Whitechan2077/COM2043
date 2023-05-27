@@ -1,14 +1,14 @@
 ﻿CREATE DATABASE Thong_Tin_Nha_Tro
 ON(
 NAME = ThongTinNhaTro,
-FILENAME = 'D:\FPT POLYTECHNIC\Semester 3\SQL SERVER\COM2043\ASIGNMENT\ThongTinNhaTro.mdf',
+FILENAME = 'D:\FPTPOLYTECHNIC\Semester3\SQL SERVER\COM2043\ASIGNMENT\ThongTinNhaTro.mdf',
 SIZE = 5,
 MAXSIZE = 20,
 FILEGROWTH = 5
 )
 LOG ON(
 NAME = ThongTinNhaTro_LOG,
-FILENAME = 'D:\FPT POLYTECHNIC\Semester 3\SQL SERVER\COM2043\ASIGNMENT\ThongTinNhaTro.ldf',
+FILENAME = 'D:\FPTPOLYTECHNIC\Semester3\SQL SERVER\COM2043\ASIGNMENT\ThongTinNhaTro.ldf',
 SIZE = 5,
 MAXSIZE = 20,
 FILEGROWTH = 5
@@ -53,16 +53,21 @@ CREATE TABLE Danh_Gia(
 );
 GO
 CREATE TABLE Nguoi_Thue_Nha(
-	maNguoiDung int CONSTRAINT FK_maNguoiDung FOREIGN KEY(maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
+	maNguoiDung int CONSTRAINT FK_maNguoiThueNha FOREIGN KEY(maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
 	maThue int IDENTITY(1,1) PRIMARY KEY
 );
 GO
 CREATE TABLE Nha_Da_Cho_Thue(
 	maThue int CONSTRAINT FK_maThue FOREIGN KEY (maThue) REFERENCES Nguoi_Thue_Nha(maThue) NOT NULL,
-	maNhaTro int CONSTRAINT FK_maNhaTro FOREIGN KEY (maNhaTro) REFERENCES Nha_tro(maNhaTro) NOT NULL,
+	maNhaTro int CONSTRAINT FK_maNhaTroaDaChoThue FOREIGN KEY (maNhaTro) REFERENCES Nha_tro(maNhaTro) NOT NULL,
 	ngayChoThue date NOT NULL,
 	ngayHetHanChoThue date,
-
+	giaTien float check(giaTien>0)  NOT NULL, 
+	PRIMARY KEY (maThue,maNhaTro)
+);
+GO
+CREATE TABLE Danh_Muc_Yeu_Thich(
+	maDanhMuc int PRIMARY KEY,
 );
 GO
 ---Nhap Nguoi Dung
