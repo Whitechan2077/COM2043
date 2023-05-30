@@ -8,4 +8,8 @@
 	1 DML ins del up định nghĩa ở DB
 	2 DDL create alter drop kiểm soát hoạt động của db ở múc cơ sở dữ liệu và sv
 
+
+	--DML insert 
+	Sytax
+	CREATE TRIGGER ten ON bang FOR (INSERT,DELETE,UPDATE)
 */
