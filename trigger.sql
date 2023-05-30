@@ -12,4 +12,8 @@
 	--DML insert 
 	Sytax
 	CREATE TRIGGER ten ON bang FOR (INSERT,DELETE,UPDATE)
+	AS
+	T-sql
+
+	--ROLLBACK TRANSACTION hoạt động của trigger để roll back lại thao tác với db 
 */
