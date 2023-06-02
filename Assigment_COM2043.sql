@@ -59,17 +59,15 @@ CREATE PROCEDURE nhapNGuoiDung
 		@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@diaChi nvarchar(50),@quan nvarchar(15),@email nvarchar(50)
 	AS
 	BEGIN
-	IF (@tenNguoiDung = NULL) PRINT 'Ten khong duoc de trong'
-	IF(@gioiTinh = NULL) PRINT 'gioi tinh khong duoc de trong'
-	IF(@sdt = NULL) PRINT 'So dien thoai khong duoc bo trong'
-	IF(@diaChi = NULL) PRINT 'Khong duoc de trong dia chi'
-	IF(@quan = NULL) PRINT 'Khong duoc de trong quan'
-	IF(@email = NULL) PRINT 'Khong duoc de trong email'
-	IF(@tenNguoiDung != NULL AND @gioiTinh != NULL AND @sdt != NULL AND @diaChi != NULL AND @quan != NULL AND @email != NULL)
-	BEGIN
-	INSERT INTO Nguoi_Dung(tenNguoiDung,gioiTinh,sdt,diaChi,quan,email)
-		VALUES(@tenNguoiDung,@gioiTinh,@sdt,@diaChi,@quan,@email)
-	END
+		IF(@gioiTinh is NULL) OR (@tenNguoiDung IS NULL) OR (@sdt IS NULL) OR (@diaChi IS NULL) OR(@quan IS NULL) OR (@email IS NULL)
+		BEGIN
+			PRINT'Loi thieu thong tin'
+		END
+		ELSE 
+			BEGIN
+				INSERT INTO Nguoi_Dung(tenNguoiDung,gioiTinh,sdt,diaChi,quan,email)
+				VALUES(@tenNguoiDung,@gioiTinh,@sdt,@diaChi,@quan,@email)
+			END
 	END
 GO
 ---Nhap loai nha
@@ -77,7 +75,7 @@ CREATE PROCEDURE nhapLoaiNha
 		@tenLoai nvarchar(20)
 	AS
 	BEGIN
-	IF(@tenLoai = NULL) PRINT 'Khong duoc de trong ten loai'
+	IF(@tenLoai IS NULL) PRINT 'Khong duoc de trong ten loai'
 	ELSE 
 		BEGIN
 			INSERT INTO LOAI_NHA(tenLoai)
@@ -85,16 +83,41 @@ CREATE PROCEDURE nhapLoaiNha
 		END
 	END
 GO
+--Nhap Loai Nha
+CREATE PROCEDURE nhapNhaTro 
+	@tenNhaTro nvarchar,@maLoai int,@dientich float,
+	@giaTien float,@diaChi nvarchar(50),@quan nvarchar(50)
+	,@moTa nvarchar(300),@ngayDang date ,@nguoiLienHe int
+AS
+	BEGIN
+	IF (@tenNhaTro IS NULL) OR (@maLoai IS NULL) OR(@diaChi IS NULL) OR (@dientich IS NULL)
+		OR(@giaTien IS NULL) OR(@quan IS NULL) OR(@moTa IS NULL) OR(@ngayDang IS NULL) OR (@nguoiLienHe IS NULL)
+		PRINT 'Thieu Du lieu'
+	ELSE 
+		BEGIN
+			INSERT INTO Nha_Tro(tenNhaTro,maLoai,giaTien,dientich,diaChi,quan,moTa,ngayDang,nguoiLienHe)
+				VALUES(@tenNhaTro,@maLoai,@giaTien,@dientich,@diaChi,@quan,@moTa,@ngayDang,@nguoiLienHe)
+		END
+	END
+GO
 --Nhap Danh gia
 CREATE PROCEDURE nhapDanhGia
-		@nguoiDanhGia int,@danhGia tinyint,@noiDungDanhGia nvarchar(300)
+		@nguoiDanhGia int,@danhGia tinyint,@noiDungDanhGia nvarchar(300),@maNhaTro INT
 	AS
 	BEGIN
-	INSERT INTO Danh_Gia
-		VALUES(@nguoiDanhGia,@danhGia,@noiDungDanhGia)
+	 IF(@nguoiDanhGia IS NULL) OR (@danhGia IS NULL) OR (@noiDungDanhGia IS NULL) OR (@maNhaTro IS NULL) PRINT 'Thieu du lieu'
+		ELSE
+			BEGIN
+				INSERT INTO Danh_Gia
+				VALUES(@nguoiDanhGia,@maNhaTro,@danhGia,@noiDungDanhGia)
+		END
 	END
+
+
 --Tim kiem theo quan
 GO
+
+
 CREATE PROCEDURE timKiemTheoQuan
 	@quan nvarchar(20)
 AS
@@ -238,7 +261,12 @@ EXEC nhapNGuoiDung N'Chu Ngọc Anh',0,'0397742811',N'Lang Sơn',N'Hạ Hòa','n
 EXEC nhapNGuoiDung N'Trần Đại Quang',0,'0297744811',N'Thụy Khuê',N'Tây Hồ','quang@gmail.com';
 EXEC nhapNGuoiDung N'Nguyễn Xuân Phúc',0,'0396744811',N'Quế Phú',N'Quế Sơn','phuc@gmail.com';
 EXEC nhapNGuoiDung N'Cù Thị Hậu',1,'0396344811',N'Hạ Hòa',N'Phú Thọ','Hau@gmail.com';
+EXEC nhapNGuoiDung 'Tao la Bo',NULL,NULL,NULL,NULL,'abc@gmail.com';
+
+SELECT * FROM Nguoi_Dung
+
 EXEC nhapLoaiNha 'Villa';
 EXEC nhapLoaiNha N'Chung cư';
 EXEC nhapLoaiNha N'Biệt Thự';
 EXEC nhapLoaiNha N'Nhà Cấp 4';
+EXEC nhapLoaiNha NULL;
