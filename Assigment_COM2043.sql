@@ -218,14 +218,17 @@ CREATE PROCEDURE timMaNguoiDung
 		SELECT @maNguoiDung=maNguoiDung  FROM Nguoi_Dung WHERE tenNguoiDung like @tenNguoiDung AND gioiTinh = @gioiTinh AND sdt like @sdt AND diaChi like @diaChi AND quan like @quan AND email like @email
 	RETURN @maNguoiDung
 GO
---Dem so like cua nha Tro
+--Dem so like cua nha Tro dislike
 CREATE PROCEDURE demSoLike
 	@maNhaTro int
 	AS
 		BEGIN
-			SELECT COUNT(Danh_Gia.danhGia),Nha_Tro.tenNhaTro FROM Nha_Tro JOIN Danh_Gia ON Nha_Tro.maNhaTro = Danh_Gia.maNhaTro
-			GROUP BY Nha_Tro.tenNhaTro
-			HAVING Danh_Gia.danhGia = 0
+		SELECT maNhaTro, 
+				SUM(CASE WHEN danhGia = 1 THEN 1 ELSE 0 END) AS Likes,
+				SUM(CASE WHEN danhGia = 0 THEN 1 ELSE 0 END) AS Dislikes
+		FROM Danh_Gia
+		GROUP BY maNhaTro
+		HAVING maNhaTro = @maNhatro;
 		END
 GO
 --Tra ve danh gia cua nha tro
@@ -239,8 +242,6 @@ CREATE PROCEDURE hienThiDanhGia
 				JOIN Nha_Tro ON Nha_Tro.maNhaTro = Danh_Gia.maNhaTro
 			WHERE Danh_Gia.maNhaTro = @maNhaTro
 		END
-GO
----Dem so like dislike theo ma
 GO
 --Xoa nha theo so dislike
 CREATE PROCEDURE xoaTheoSoDisLike
@@ -265,7 +266,7 @@ EXEC nhapNGuoiDung N'Cù Thị Hậu',1,'0396344811',N'Hạ Hòa',N'Phú Thọ',
 EXEC nhapNGuoiDung 'Tao la Bo',NULL,NULL,NULL,NULL,'abc@gmail.com';
 
 SELECT * FROM Nguoi_Dung
-
+SELECT* FROM LOAI_NHA
 EXEC nhapLoaiNha 'Villa';
 EXEC nhapLoaiNha N'Chung cư';
 EXEC nhapLoaiNha N'Biệt Thự';
@@ -305,4 +306,5 @@ EXEC timKiemTheoQuan N'Hỏa Lò'
 DECLARE @ma int;
 EXEC @ma = timMaNguoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Nam Từ Liêm',N'Mỹ Đình 1','buiduong8198@gmail.com'
 SELECT @ma
-EXEC hienThiDanhGia 8
+EXEC hienThiDanhGia 4
+EXEC dems
