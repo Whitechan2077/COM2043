@@ -237,7 +237,10 @@ CREATE PROCEDURE hienThiDanhGia
 				FROM Nguoi_Dung 
 				JOIN Danh_Gia ON Nguoi_Dung.maNguoiDung = Danh_Gia.nguoiDanhGia 
 				JOIN Nha_Tro ON Nha_Tro.maNhaTro = Danh_Gia.maNhaTro
+			WHERE Danh_Gia.maNhaTro = @maNhaTro
 		END
+GO
+---Dem so like dislike theo ma
 GO
 --Xoa nha theo so dislike
 CREATE PROCEDURE xoaTheoSoDisLike
@@ -283,10 +286,16 @@ EXEC nhapNhaTro N'Villa Sau Song Sắt Siêu VIP',1,40000,8000,N'Hỏa Lò',N'H�
 SELECT * FROM Danh_Gia
 EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
 EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
+EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
 EXEC nhapDanhGia 4,1,N'Nhà siêu đẹp tiếc không có tường đá để đếm',8
 EXEC nhapDanhGia 5,0,N'Nhà Xấu Không thể đep',3
+EXEC nhapDanhGia 9,0,N'Nhà Xấuv vcl',2
+EXEC nhapDanhGia 9,0,N'Nhà Xấuv vcl',2
+EXEC nhapDanhGia 3,0,N'Nhà có ma',4
+EXEC nhapDanhGia 2,1,N'Nhà sạch ',7
 
-		@nguoiDanhGia int,@danhGia tinyint,@noiDungDanhGia nvarchar(300),@maNhaTro INT
+
+
 
 EXEC timKiemTheoLoaiNhaTro 1
 EXEC timKiemTheoKhoangDienTich 1000,3000
@@ -296,3 +305,4 @@ EXEC timKiemTheoQuan N'Hỏa Lò'
 DECLARE @ma int;
 EXEC @ma = timMaNguoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Nam Từ Liêm',N'Mỹ Đình 1','buiduong8198@gmail.com'
 SELECT @ma
+EXEC hienThiDanhGia 8
