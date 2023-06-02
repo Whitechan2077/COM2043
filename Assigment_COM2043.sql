@@ -46,11 +46,11 @@ CREATE TABLE Nha_Tro(
 GO
 
 CREATE TABLE Danh_Gia (
+	maDanhGia int IDENTITY(1,1) PRIMARY KEY,
 	nguoiDanhGia INT CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY (nguoiDanhGia) REFERENCES  Nguoi_Dung(maNguoiDung) NOT NULL,
 	maNhaTro INT CONSTRAINT FK_maNha FOREIGN KEY (maNhaTro) REFERENCES Nha_Tro(maNhaTro),
 	danhGia TINYINT CHECK (danhGia BETWEEN 1 AND 5) NOT NULL,
 	noiDungDanhGia NVARCHAR(300),
-	PRIMARY KEY (nguoiDanhGia)
 );
 
 GO
@@ -108,7 +108,7 @@ CREATE PROCEDURE nhapDanhGia
 	 IF(@nguoiDanhGia IS NULL) OR (@danhGia IS NULL) OR (@noiDungDanhGia IS NULL) OR (@maNhaTro IS NULL) PRINT 'Thieu du lieu'
 		ELSE
 			BEGIN
-				INSERT INTO Danh_Gia
+				INSERT INTO Danh_Gia(nguoiDanhGia,maNhaTro,danhGia,noiDungDanhGia)
 				VALUES(@nguoiDanhGia,@maNhaTro,@danhGia,@noiDungDanhGia)
 		END
 	END
@@ -116,8 +116,6 @@ CREATE PROCEDURE nhapDanhGia
 
 --Tim kiem theo quan
 GO
-
-
 CREATE PROCEDURE timKiemTheoQuan
 	@quan nvarchar(20)
 AS
@@ -130,7 +128,7 @@ BEGIN
 		CASE
 			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
 			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
-		END AS N'Người Giới Thiệu'
+		END AS N'Người Giới Thiệu',Nguoi_Dung.sdt,Nguoi_Dung.diaChi
 	FROM Nha_Tro
 	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung
 	WHERE Nha_Tro.quan = @quan;
@@ -149,7 +147,7 @@ BEGIN
 		CASE
 			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
 			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
-		END AS N'Người Giới Thiệu'
+		END AS N'Người Giới Thiệu',Nguoi_Dung.sdt,Nguoi_Dung.diaChi
 	FROM Nha_Tro
 	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung
 	WHERE Nha_Tro.giaTien BETWEEN @gia1 AND @gia2
@@ -168,7 +166,7 @@ BEGIN
 		CASE
 			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
 			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
-		END AS N'Người Giới Thiệu'
+		END AS N'Người Giới Thiệu',Nguoi_Dung.sdt,Nguoi_Dung.diaChi
 	FROM Nha_Tro
 	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung
 	WHERE Nha_Tro.giaTien BETWEEN @dienTich1 AND @dienTich2
@@ -187,7 +185,7 @@ BEGIN
 		CASE
 			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
 			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
-		END AS N'Người Giới Thiệu'
+		END AS N'Người Giới Thiệu',Nguoi_Dung.sdt,Nguoi_Dung.diaChi
 	FROM LOAI_NHA JOIN Nha_Tro ON LOAI_NHA.maLoai = Nha_Tro.maLoai
 	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung 
 	WHERE Nha_Tro.maLoai = @maLoai
@@ -199,14 +197,14 @@ CREATE PROCEDURE timKiemTheoLoaiKhoangNam
 AS
 BEGIN
 	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
-		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		 CONVERT(varchar,Nha_Tro.dientich)+ 'm2' AS 'Diện tích',
 		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
 		Nha_Tro.moTa AS 'Mô tả',
 		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
 		CASE
 			WHEN Nguoi_Dung.gioiTinh = 0 THEN 'A ' + Nguoi_Dung.tenNguoiDung
 			ELSE 'C ' + Nguoi_Dung.tenNguoiDung
-		END AS N'Người Giới Thiệu'
+		END AS N'Người Giới Thiệu',Nguoi_Dung.sdt,Nguoi_Dung.diaChi
 	FROM LOAI_NHA JOIN Nha_Tro ON LOAI_NHA.maLoai = Nha_Tro.maLoai
 	JOIN Nguoi_Dung ON Nha_Tro.nguoiLienHe = Nguoi_Dung.maNguoiDung 
 	WHERE YEAR(Nha_Tro.ngayDang) BETWEEN @nam1 AND @nam2
@@ -217,8 +215,8 @@ CREATE PROCEDURE timMaNguoiDung
 	@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@quan nvarchar(15),@diaChi nvarchar(50),@email nvarchar(50)
 	AS
 	    DECLARE @maNguoiDung int
-		SELECT @maNguoiDung=maNguoiDung  FROM Nguoi_Dung WHERE tenNguoiDung like @tenNguoiDung AND gioiTinh = @gioiTinh AND sdt =@sdt AND diaChi = @diaChi AND quan =@quan AND email = @email
-		RETURN @maNguoiDung
+		SELECT @maNguoiDung=maNguoiDung  FROM Nguoi_Dung WHERE tenNguoiDung like @tenNguoiDung AND gioiTinh = @gioiTinh AND sdt like @sdt AND diaChi like @diaChi AND quan like @quan AND email like @email
+	RETURN @maNguoiDung
 GO
 --Dem so like cua nha Tro
 CREATE PROCEDURE demSoLike
@@ -282,7 +280,16 @@ EXEC nhapNhaTro N'Mon city',2,600000,8000,N'Mỹ Đình',N'Nam Từ Liêm',N'S�
 EXEC nhapNhaTro N'Nhà Đá',2,NULL,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2012-3-12',4
 EXEC nhapNhaTro N'Villa Sau Song Sắt Siêu VIP',1,40000,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2022-6-12',8
 
+SELECT * FROM Danh_Gia
+EXEC nhapDanhGia 4,1,N'Nhà siêu đẹp tiếc không có 1 cuốn lịch',9
+EXEC nhapDanhGia 4,1,N'Nhà siêu đẹp tiếc không có tường đá để đếm',8
+
 
 EXEC timKiemTheoLoaiNhaTro 1
 EXEC timKiemTheoKhoangDienTich 1000,3000
 EXEC timKiemTheoKhoangTien 100,8000
+EXEC timKiemTheoLoaiKhoangNam 2012,2022
+EXEC timKiemTheoQuan N'Hỏa Lò'
+DECLARE @ma int;
+EXEC @ma = timMaNguoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Nam Từ Liêm',N'Mỹ Đình 1','buiduong8198@gmail.com'
+SELECT @ma
