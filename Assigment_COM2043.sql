@@ -289,6 +289,7 @@ EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
 EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
 EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
 EXEC nhapDanhGia 4,1,N'Nhà siêu đẹp tiếc không có tường đá để đếm',8
+EXEC nhapDanhGia 7,0,N'Nhà siêu đẹp tiếc không có tường đá để đếm',8
 EXEC nhapDanhGia 5,0,N'Nhà Xấu Không thể đep',3
 EXEC nhapDanhGia 9,0,N'Nhà Xấuv vcl',2
 EXEC nhapDanhGia 9,0,N'Nhà Xấuv vcl',2
@@ -307,4 +308,4 @@ DECLARE @ma int;
 EXEC @ma = timMaNguoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Nam Từ Liêm',N'Mỹ Đình 1','buiduong8198@gmail.com'
 SELECT @ma
 EXEC hienThiDanhGia 4
-EXEC dems
+EXEC demSoLike 8
