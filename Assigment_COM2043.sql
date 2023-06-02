@@ -290,6 +290,8 @@ EXEC nhapNhaTro N'Nhà Đá',2,600000,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven t�
 EXEC nhapNhaTro N'Mon city',2,600000,8000,N'Mỹ Đình',N'Nam Từ Liêm',N'Sạch','2012-3-12',1
 EXEC nhapNhaTro N'Nhà Đá',2,NULL,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2012-3-12',4
 EXEC nhapNhaTro N'Villa Sau Song Sắt Siêu VIP',1,40000,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2022-6-12',8
+EXEC nhapNhaTro N'Villa Sau Song Sắt',1,10000,5000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2022-6-12',11
+
 
 SELECT * FROM Danh_Gia
 EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
@@ -302,6 +304,10 @@ EXEC nhapDanhGia 9,0,N'Nhà Xấuv vcl',2
 EXEC nhapDanhGia 9,0,N'Nhà Xấuv vcl',2
 EXEC nhapDanhGia 3,0,N'Nhà có ma',4
 EXEC nhapDanhGia 2,1,N'Nhà sạch ',7
+EXEC nhapDanhGia 2,0,N'Nhà xau',5
+EXEC nhapDanhGia 11,0,N'Nhà xau',6
+
+
 
 
 
@@ -309,13 +315,13 @@ EXEC nhapDanhGia 2,1,N'Nhà sạch ',7
 EXEC timKiemTheoLoaiNhaTro 1
 EXEC timKiemTheoKhoangDienTich 1000,3000
 EXEC timKiemTheoKhoangTien 100,8000
-EXEC timKiemTheoLoaiKhoangNam 2012,2022
+EXEC timKiemTheoLoaiKhoangNam 2012,2023
 EXEC timKiemTheoQuan N'Hỏa Lò'
 DECLARE @ma int;
 EXEC @ma = timMaNguoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Nam Từ Liêm',N'Mỹ Đình 1','buiduong8198@gmail.com'
 SELECT @ma
-EXEC hienThiDanhGia 2
-EXEC demSoLike 8
+EXEC hienThiDanhGia 7
+EXEC demSoLike 5
 EXEC xoaTheoSoDisLike 0
 SELECT * FROM Danh_Gia
 SELECT * FROM Nha_Tro
