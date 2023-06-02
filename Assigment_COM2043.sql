@@ -254,8 +254,8 @@ CREATE PROCEDURE xoaTheoSoDisLike
 			SUM(CASE WHEN danhGia = 0 THEN 1 ELSE 0 END)
 		
 		FROM Danh_Gia GROUP BY maNhaTro 
-		DELETE FROM Nha_Tro WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
-		DELETE FROM Danh_Gia WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
+			DELETE FROM Danh_Gia WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
+			DELETE FROM Nha_Tro WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
 	END
 GO
 --Thuc thi STRORE PROCEDURE
@@ -314,5 +314,8 @@ EXEC timKiemTheoQuan N'Hỏa Lò'
 DECLARE @ma int;
 EXEC @ma = timMaNguoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Nam Từ Liêm',N'Mỹ Đình 1','buiduong8198@gmail.com'
 SELECT @ma
-EXEC hienThiDanhGia 4
+EXEC hienThiDanhGia 2
 EXEC demSoLike 8
+EXEC xoaTheoSoDisLike 0
+SELECT * FROM Danh_Gia
+SELECT * FROM Nha_Tro
