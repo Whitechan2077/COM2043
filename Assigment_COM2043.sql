@@ -85,7 +85,7 @@ CREATE PROCEDURE nhapLoaiNha
 GO
 --Nhap Loai Nha
 CREATE PROCEDURE nhapNhaTro 
-	@tenNhaTro nvarchar,@maLoai int,@dientich float,
+	@tenNhaTro nvarchar(70),@maLoai int,@dientich float,
 	@giaTien float,@diaChi nvarchar(50),@quan nvarchar(50)
 	,@moTa nvarchar(300),@ngayDang date ,@nguoiLienHe int
 AS
@@ -270,3 +270,13 @@ EXEC nhapLoaiNha N'Chung cư';
 EXEC nhapLoaiNha N'Biệt Thự';
 EXEC nhapLoaiNha N'Nhà Cấp 4';
 EXEC nhapLoaiNha NULL;
+
+SELECT * FROM Nha_Tro
+EXEC nhapNhaTro N'Chung cư siêu cấp',2,10000,9000,N'98 Nguyễn Khánh Toàn',N'Cầu Giấy',N'Nhà siêu xịn','2022-12-12',1
+EXEC nhapNhaTro N'Nhà cấp 4 ven hồ',4,10000,9000,N'Hồ Tây',N'Tây Hồ',N'Nhà siêu Sạch','2022-3-12',3
+EXEC nhapNhaTro N'Biệt thự sang sang chảnh',3,300000,9000,N'Hồ Tây',N'Tây Hồ',N'Nhà siêu Sạch ĐẸP','2022-3-12',3
+EXEC nhapNhaTro N'Villa Chân Cầu Long Biên',3,400000,1000,N'Cầu Long Biên',N'Long Biên',N'Siêu bát hương','2012-3-12',9
+EXEC nhapNhaTro N'Villa Song Sắt',3,400000,1000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2012-3-12',4
+EXEC nhapNhaTro N'Nhà Đá',2,600000,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2012-3-12',4
+EXEC nhapNhaTro N'Mon city',2,600000,8000,N'Mỹ Đình',N'Nam Từ Liêm',N'Sạch','2012-3-12',1
+EXEC nhapNhaTro N'Nhà Đá',2,NULL,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2012-3-12',4
