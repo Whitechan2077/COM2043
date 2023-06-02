@@ -123,7 +123,7 @@ CREATE PROCEDURE timKiemTheoQuan
 AS
 BEGIN
 	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
-		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		CONVERT(varchar,Nha_Tro.dientich) + 'm2' AS 'Diện tích',
 		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
 		Nha_Tro.moTa AS 'Mô tả',
 		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
@@ -142,7 +142,7 @@ CREATE PROCEDURE timKiemTheoKhoangTien
 AS
 BEGIN
 	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
-		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		CONVERT(varchar,Nha_Tro.dientich) + 'm2' AS 'Diện tích',
 		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
 		Nha_Tro.moTa AS 'Mô tả',
 		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
@@ -161,7 +161,7 @@ CREATE PROCEDURE timKiemTheoKhoangDienTich
 AS
 BEGIN
 	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
-		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		CONVERT(varchar,Nha_Tro.dientich) + 'm2' AS 'Diện tích',
 		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
 		Nha_Tro.moTa AS 'Mô tả',
 		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
@@ -180,7 +180,7 @@ CREATE PROCEDURE timKiemTheoLoaiNhaTro
 AS
 BEGIN
 	SELECT N'Cho thuê nhà trọ tại' + ' ' + Nha_Tro.diaChi + ' ' + Nha_Tro.quan AS N'Cho thuê phòng',
-		Nha_Tro.dientich + 'm2' AS 'Diện tích',
+		CONVERT(varchar,Nha_Tro.dientich) + 'm2' AS 'Diện tích',
 		FORMAT(Nha_Tro.giaTien, '#,##0') AS N'Giá Tiền',
 		Nha_Tro.moTa AS 'Mô tả',
 		CONVERT(varchar, Nha_Tro.ngayDang, 105) AS N'Ngày Đăng',
@@ -280,3 +280,9 @@ EXEC nhapNhaTro N'Villa Song Sắt',3,400000,1000,N'Hỏa Lò',N'Hỏa Lò',N'Du
 EXEC nhapNhaTro N'Nhà Đá',2,600000,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2012-3-12',4
 EXEC nhapNhaTro N'Mon city',2,600000,8000,N'Mỹ Đình',N'Nam Từ Liêm',N'Sạch','2012-3-12',1
 EXEC nhapNhaTro N'Nhà Đá',2,NULL,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2012-3-12',4
+EXEC nhapNhaTro N'Villa Sau Song Sắt Siêu VIP',1,40000,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2022-6-12',8
+
+
+EXEC timKiemTheoLoaiNhaTro 1
+EXEC timKiemTheoKhoangDienTich 1000,3000
+EXEC timKiemTheoKhoangTien 100,8000
