@@ -49,8 +49,8 @@ CREATE TABLE Danh_Gia (
 	maDanhGia int IDENTITY(1,1) PRIMARY KEY,
 	nguoiDanhGia INT CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY (nguoiDanhGia) REFERENCES  Nguoi_Dung(maNguoiDung) NOT NULL,
 	maNhaTro INT CONSTRAINT FK_maNha FOREIGN KEY (maNhaTro) REFERENCES Nha_Tro(maNhaTro),
-	danhGia TINYINT CHECK (danhGia BETWEEN 1 AND 5) NOT NULL,
-	noiDungDanhGia NVARCHAR(300),
+	danhGia TINYINT NOT NULL, 
+	noiDungDanhGia NVARCHAR(300)
 );
 
 GO
