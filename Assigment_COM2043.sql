@@ -248,7 +248,14 @@ CREATE PROCEDURE xoaTheoSoDisLike
 	@soDislike int
 	AS
 	BEGIN
-
+		DECLARE @maNT table(maNhaTro int,tongDislike int)
+		INSERT INTO @maNT
+		SELECT maNhaTro,  
+			SUM(CASE WHEN danhGia = 0 THEN 1 ELSE 0 END)
+		
+		FROM Danh_Gia GROUP BY maNhaTro 
+		DELETE FROM Nha_Tro WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
+		DELETE FROM Danh_Gia WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
 	END
 GO
 --Thuc thi STRORE PROCEDURE
