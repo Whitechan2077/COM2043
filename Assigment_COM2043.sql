@@ -281,9 +281,12 @@ EXEC nhapNhaTro N'Nhà Đá',2,NULL,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút
 EXEC nhapNhaTro N'Villa Sau Song Sắt Siêu VIP',1,40000,8000,N'Hỏa Lò',N'Hỏa Lò',N'Du ven tút','2022-6-12',8
 
 SELECT * FROM Danh_Gia
-EXEC nhapDanhGia 4,1,N'Nhà siêu đẹp tiếc không có 1 cuốn lịch',9
+EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
+EXEC nhapDanhGia 1,1,N'Nhà siêu đẹp',1
 EXEC nhapDanhGia 4,1,N'Nhà siêu đẹp tiếc không có tường đá để đếm',8
+EXEC nhapDanhGia 5,0,N'Nhà Xấu Không thể đep',3
 
+		@nguoiDanhGia int,@danhGia tinyint,@noiDungDanhGia nvarchar(300),@maNhaTro INT
 
 EXEC timKiemTheoLoaiNhaTro 1
 EXEC timKiemTheoKhoangDienTich 1000,3000
