@@ -42,51 +42,34 @@ CREATE TABLE Nha_Tro(
 	moTa nvarchar(300),
 	ngayDang date NOT NULL,
 	nguoiLienHe int CONSTRAINT FK_maNguoiDung FOREIGN KEY(nguoiLienHe) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
-	trangThai tinyint
 );
 GO
-CREATE TABLE Nguoi_Thue_Nha (
-	maNguoiDung INT CONSTRAINT FK_maNguoiThueNha FOREIGN KEY (maNguoiDung) REFERENCES Nguoi_Dung (maNguoiDung) NOT NULL,
-	maThue INT IDENTITY(1,1) PRIMARY KEY,
-	danhGia tinyint DEFAULT 0 
-);
-GO
-CREATE TABLE Nha_Da_Cho_Thue (
-	maThue INT CONSTRAINT FK_maThueNha FOREIGN KEY (maThue) REFERENCES Nguoi_Thue_Nha(maThue) NOT NULL,
-	maNhaTro INT CONSTRAINT FK_maNhaTroaDaChoThue FOREIGN KEY (maNhaTro) REFERENCES Nha_tro (maNhaTro) NOT NULL,
-	ngayChoThue DATE NOT NULL,
-	ngayHetHanChoThue DATE,
-	giaTien FLOAT CHECK (giaTien > 0) NOT NULL, 
-	PRIMARY KEY (maNhaTro)
-);
 
 CREATE TABLE Danh_Gia (
 	nguoiDanhGia INT CONSTRAINT FK_maNguoiDanhGia FOREIGN KEY (nguoiDanhGia) REFERENCES  Nguoi_Dung(maNguoiDung) NOT NULL,
-	maNhaTro INT CONSTRAINT FK_maNha FOREIGN KEY (maNhaTro) REFERENCES Nha_Da_Cho_Thue (maNhaTro),
+	maNhaTro INT CONSTRAINT FK_maNha FOREIGN KEY (maNhaTro) REFERENCES Nha_Tro(maNhaTro),
 	danhGia TINYINT CHECK (danhGia BETWEEN 1 AND 5) NOT NULL,
 	noiDungDanhGia NVARCHAR(300),
 	PRIMARY KEY (nguoiDanhGia)
 );
 
 GO
-CREATE TABLE Danh_Muc_Yeu_Thich(
-	maDanhMuc int IDENTITY(1,1) PRIMARY KEY,
-	maNguoiDung int CONSTRAINT FK_nguoi_dung_yeu_thich FOREIGN KEY (maNguoiDung) REFERENCES Nguoi_Dung(maNguoiDung) NOT NULL,
-);
-GO
-CREATE TABLE Nha_Duoc_Yeu_Thich(
-	maDanhMuc int CONSTRAINT FK_MaDanhMuc FOREIGN KEY (maDanhMuc) REFERENCES Danh_Muc_Yeu_Thich(maDanhMuc) NOT NULL,
-	maNhaTro int CONSTRAINT FK_NhaDuocYeuThic FOREIGN KEY (maNhaTro) REFERENCES Nha_Tro(maNhaTro),
-	PRIMARY KEY(maDanhMuc,maNhaTro)
-);
-GO
 ---Nhap Nguoi Dung
 CREATE PROCEDURE nhapNGuoiDung
 		@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@diaChi nvarchar(50),@quan nvarchar(15),@email nvarchar(50)
 	AS
 	BEGIN
+	IF (@tenNguoiDung = NULL) PRINT 'Ten khong duoc de trong'
+	IF(@gioiTinh = NULL) PRINT 'gioi tinh khong duoc de trong'
+	IF(@sdt = NULL) PRINT 'So dien thoai khong duoc bo trong'
+	IF(@diaChi = NULL) PRINT 'Khong duoc de trong dia chi'
+	IF(@quan = NULL) PRINT 'Khong duoc de trong quan'
+	IF(@email = NULL) PRINT 'Khong duoc de trong email'
+	IF(@tenNguoiDung != NULL AND @gioiTinh != NULL AND @sdt != NULL AND @diaChi != NULL AND @quan != NULL AND @email != NULL)
+	BEGIN
 	INSERT INTO Nguoi_Dung(tenNguoiDung,gioiTinh,sdt,diaChi,quan,email)
 		VALUES(@tenNguoiDung,@gioiTinh,@sdt,@diaChi,@quan,@email)
+	END
 	END
 GO
 ---Nhap loai nha
@@ -94,8 +77,12 @@ CREATE PROCEDURE nhapLoaiNha
 		@tenLoai nvarchar(20)
 	AS
 	BEGIN
-		INSERT INTO LOAI_NHA(tenLoai)
-		VALUES(@tenLoai)
+	IF(@tenLoai = NULL) PRINT 'Khong duoc de trong ten loai'
+	ELSE 
+		BEGIN
+			INSERT INTO LOAI_NHA(tenLoai)
+			VALUES(@tenLoai)
+		END
 	END
 GO
 --Nhap Danh gia
