@@ -33,3 +33,25 @@ select * from Products WHERE unint >20
 -- view có thể update trên csdl
 -- với view update truy vấn không thể có  distinct top,group by 
 -- ngược lại là readonly =))
+--UPDATE VIEW tenvieu SET (DK)
+Lưu ý khi sử dụng view có update là việc chúng ta sửa đổi các bản gi theo điều kiện trong view
+thành giá trị mà ta muốn nến sẽ rất dễ xảy ra trường hợp dư liệu bị sửa một loạt đẫn đến sai nên chúng
+ta cần cẩn trọng và có thể kết hợp với các cú pháp để kiểm ttra hoặc dùng transaction
+bt tạo view để lấy ra tất cả CUSTOMER tất cả những mà Country là %a%
+
+--function
+-- chia làm 2 loại trả về giá trị và trả về bảng
+-- bảng thì bảng đơn với bảng đa
+-- giông nhau sp - function
+-- PROCEDUCE có thể không return nhưng function thì bắt buộc 
+-- function không chứa tham số out
+-- Không chứa insert delete update
+-- tuy nhiên vẫn có thể tạo được biến tạm trong thân function
+ví đụ về một function trả về giá trị vô hướng 
+ 
+CREATE function tính tuổi (@namSinh date)
+retunrs int
+AS 
+BEGIN
+	return YEAR(GETDATE() - YEAR(@namSinh))
+END
