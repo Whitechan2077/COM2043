@@ -16,4 +16,20 @@ CREATE VIEW ten tên cột 1, tên cột 2
 	as
 	truy vấn 
 	WITH CHECK OPTION // có thể không có
-	*/
+Lưu ý tên view không được giống nhau hoặc trùng tên bảng
+view không chưá các từ khóa như into order by, có thể dùng order by mới có top
+
+ví dụ về view
+
+*/
+USE con_gio_bac_ki
+/*
+CREATE VIEW pdMoreThan20
+as
+select * from Products WHERE unint >20
+*\
+-- view chia lamf 2 loai
+-- view cập nhật view update và view readonly
+-- view có thể update trên csdl
+-- với view update truy vấn không thể có  distinct top,group by 
+-- ngược lại là readonly =))
