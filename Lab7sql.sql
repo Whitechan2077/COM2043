@@ -13,6 +13,8 @@ LOG ON(
 	MAXSIZE = 20,
 	FILEGROWTH = 5
 );
+GO 
+USE QLNT
 GO
 CREATE TABLE Nguoi_Dung(
 	maNguoiDung int IDENTITY(1,1) PRIMARY KEY,
@@ -23,7 +25,6 @@ CREATE TABLE Nguoi_Dung(
 	quan nvarchar(15) CHECK(LEN(quan)>1) NOT NULL,
 	email nvarchar(50) NOT NULL
 )
-
 SELECT * FROM Nguoi_Dung
 
 GO
@@ -78,6 +79,7 @@ CREATE PROCEDURE sp_getUser
 		END
 GO
 EXEC sp_getUser 0
+SELECT * FROM Nguoi_Dung
 GO
 CREATE PROCEDURE sp_insertUser
 	@tenNguoiDung nvarchar(30),@gioiTinh tinyint,
@@ -88,7 +90,17 @@ AS
 	INSERT INTO Nguoi_Dung(tenNguoiDung,gioiTinh,sdt,diaChi,quan,email) 
 		VALUES(@tenNguoiDung,@gioiTinh,@sdt,@diaChi,@quan,@email);
 	END
-EXEC sp_insertUser 'Hoang Lan',1,'0397767818','Nga Tu Ham Nghi','Nam Tu Lien','k1@gmail.com'
+EXEC sp_insertUser 'Hoang Lan',1,'0393767818','Nga Tu Ham Nghi','Nam Tu Lien','k1@fpt.edu.vn'
 EXEC sp_insertUser 'Hoang Hong',1,'0397767813','Nga Tu Ham Nghi','Nam Tu Lien','k2@gmail.com'
 EXEC sp_insertUser 'Hoang Duong',1,'0389767828','Nga Tu Ham Nghi','Nam Tu Lien','k3@gmail.com'
 EXEC sp_insertUser 'Ambatukam',1,'03977678152','Nga Tu Ham Nghi','Nam Tu Lien','gm='
+EXEC sp_insertUser 'Hoang Dung',0,'0383973828','Nga Tu Ham Nghi','Nam Tu Lien','k3@gmail.com'
+
+SELECT maNguoiDung,tenNguoiDung,CASE
+					WHEN gioiTinh =  0 THEN 'Nam'
+					WHEN gioiTinh = 1 THEN N'Nữ'
+					END AS [Gioi tinh]
+					,
+					'0'+CONVERT(varchar,FORMAT(CONVERT(int,sdt),'0##,##')) AS [sdt],
+					diaChi,quan,email
+FROM Nguoi_Dung
