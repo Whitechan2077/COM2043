@@ -258,6 +258,24 @@ CREATE PROCEDURE xoaTheoSoDisLike
 			DELETE FROM Nha_Tro WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
 	END
 GO
+--tao view 
+CREATE VIEW top10Like
+AS
+	SELECT TOP 10 Nha_Tro.dientich,Nha_Tro.giaTien,Nha_Tro.moTa,Nha_Tro.ngayDang,
+			Nguoi_Dung.tenNguoiDung,SUM(CASE 
+			WHEN Danh_Gia.danhGia = 1 THEN 1
+			ELSE 0
+			END) AS'Tong_so_like'
+			,Nguoi_Dung.diaChi,Nguoi_Dung.sdt,Nguoi_Dung.email
+	FROM Nguoi_Dung JOIN Nha_Tro ON 
+		Nguoi_Dung.maNguoiDung = Nha_Tro.nguoiLienHe JOIN Danh_Gia 
+		ON Danh_Gia.maNhaTro = Nha_Tro.maNhaTro
+	GROUP BY Nha_Tro.dientich,Nha_Tro.giaTien,Nha_Tro.moTa,Nha_Tro.ngayDang,
+			Nguoi_Dung.tenNguoiDung,Nguoi_Dung.diaChi,Nguoi_Dung.sdt,Nguoi_Dung.email
+	HAVING SUM(CASE WHEN Danh_Gia.danhGia = 1 THEN 1 ELSE 0 END) > 0
+       AND SUM(CASE WHEN Danh_Gia.danhGia = 1 THEN 1 ELSE 0 END) IS NOT NULL
+	ORDER BY Tong_so_like DESC
+GO
 --Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
 EXEC nhapNGuoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Mỹ Đình 1',N'Nam Từ Liêm','buiduong8198@gmail.com';
@@ -321,7 +339,8 @@ DECLARE @ma int;
 EXEC @ma = timMaNguoiDung N'Bùi Hoàng Dương',0,'0397767818',N'Nam Từ Liêm',N'Mỹ Đình 1','buiduong8198@gmail.com'
 SELECT @ma
 EXEC hienThiDanhGia 7
-EXEC demSoLike 5
+EXEC demSoLike 8
 EXEC xoaTheoSoDisLike 0
+SELECT * FROM top10Like
 SELECT * FROM Danh_Gia
 SELECT * FROM Nha_Tro
