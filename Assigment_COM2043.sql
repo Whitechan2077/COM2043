@@ -112,8 +112,6 @@ CREATE PROCEDURE nhapDanhGia
 				VALUES(@nguoiDanhGia,@maNhaTro,@danhGia,@noiDungDanhGia)
 		END
 	END
-
-
 --Tim kiem theo quan
 GO
 CREATE PROCEDURE timKiemTheoQuan
@@ -258,6 +256,18 @@ CREATE PROCEDURE xoaTheoSoDisLike
 			DELETE FROM Nha_Tro WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE tongDislike = @soDislike)
 	END
 GO
+CREATE PROCEDURE xoaTheoKhoangThoiGianDang
+@date1 date,@date2 date
+AS
+	BEGIN
+			DECLARE @maNT table(maNhaTro int,ngayDang date)
+		INSERT INTO @maNT
+		SELECT maNhaTro, Nha_Tro.ngayDang
+			FROM Nha_Tro 
+			DELETE FROM Danh_Gia WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE ngayDang BETWEEN @date1 AND @date2)
+			DELETE FROM Nha_Tro WHERE maNhaTro IN (SELECT maNhaTro FROM @maNT WHERE ngayDang BETWEEN @date1 AND @date2)
+	END
+GO
 --tao view 
 CREATE VIEW top10Like
 AS
@@ -275,6 +285,7 @@ AS
 	HAVING SUM(CASE WHEN Danh_Gia.danhGia = 1 THEN 1 ELSE 0 END) > 0
        AND SUM(CASE WHEN Danh_Gia.danhGia = 1 THEN 1 ELSE 0 END) IS NOT NULL
 	ORDER BY Tong_so_like DESC
+
 GO
 --Thuc thi STRORE PROCEDURE
 EXEC nhapNGuoiDung N'Bùi Hoàng Dũng',0,'0397767819',N'Mỹ Đình 2',N'Nam Từ Liêm','buidung8198@gmail.com';
@@ -341,6 +352,7 @@ SELECT @ma
 EXEC hienThiDanhGia 7
 EXEC demSoLike 8
 EXEC xoaTheoSoDisLike 0
+EXEC xoaTheoKhoangThoiGianDang '1-1-2012','1-1-2014'
 SELECT * FROM top10Like
 SELECT * FROM Danh_Gia
 SELECT * FROM Nha_Tro
