@@ -20,7 +20,26 @@ Cấu trúc của Tigger
 	FOR (INSERT , UPDATE <DELETE)
 	AS
 	t -sql
-*/
+	có rất nhiều loại trigger như 
+	DML DDL System, db trigger, cpmpund, dll, instead of để thực hiện nhiều loại chức năng khác nhau
+	DML thực hiện khi insert delete update thí nó sẽ thực thi trong khi hoặc sau khi 
+	các truy vấn khi dữ liệu được sửa đổi
+	FOR (trong khi)
+	AFTER (sau khi)
+	loại trigger chỉ định nghĩa trong csdl
+	Hai loại bảng inserted, deleted là hai bảng dùng để lưu trữ dư liệu tạm thời khi chúng ta thực hiên truy vấn insert
+	delete update
+	-khi chúng ta xóa các bản gi có giá > 5000
+	bản chất dữ liệu cần xóa sẽ tạo bản sao trong bàng deleted 
+	truy vấn được commit thì các bản ghi trong bảng mới được xóa thật
+	bảng deleted tạo re để kiểm soát các hành vi liên quan để hành động xóa
+	nếu có lỗi thì chúng ra có thể Roll back TRANSACTION bảo toàn dữ liệu cũ
+	nguyên lý hoạt đọng sẽ như sau
+	-> insert delete update đẩy dữ liệu vào trong inserted là deleted
+	-> kiểm tra điều kiện kết quả -> thực hiện trigger nếu có -> thực hiện truy vấn trong db
+	Trigger for trong khi truy vấn
+
+	*/
 Go
 CREATE TRIGGER selectInsert ON NHANVIEN 
 	FOR INSERT

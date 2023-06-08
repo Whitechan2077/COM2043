@@ -52,7 +52,6 @@ CREATE TABLE Danh_Gia (
 	danhGia TINYINT NOT NULL, 
 	noiDungDanhGia NVARCHAR(300)
 );
-
 GO
 ---Nhap Nguoi Dung
 CREATE PROCEDURE nhapNGuoiDung
@@ -216,6 +215,18 @@ CREATE PROCEDURE timMaNguoiDung
 		SELECT @maNguoiDung=maNguoiDung  FROM Nguoi_Dung WHERE tenNguoiDung like @tenNguoiDung AND gioiTinh = @gioiTinh AND sdt like @sdt AND diaChi like @diaChi AND quan like @quan AND email like @email
 	RETURN @maNguoiDung
 GO
+CREATE FUNCTION fReturnUserID
+	(@tenNguoiDung nvarchar(30),@gioiTinh tinyint,@sdt nvarchar(10),@quan nvarchar(15),@diaChi nvarchar(50),@email nvarchar(50))
+RETURNS int 
+		AS
+		BEGIN
+		DECLARE @maNguoiDung int
+		SELECT @maNguoiDung=maNguoiDung  
+			FROM Nguoi_Dung 
+			WHERE tenNguoiDung like @tenNguoiDung AND gioiTinh = @gioiTinh AND sdt like @sdt AND diaChi like @diaChi AND quan like @quan AND email like @email
+	RETURN @maNguoiDung
+	END;
+GO
 --Dem so like cua nha Tro dislike
 CREATE PROCEDURE demSoLike
 	@maNhaTro int
@@ -229,6 +240,21 @@ CREATE PROCEDURE demSoLike
 		HAVING maNhaTro = @maNhatro;
 		END
 GO
+--tra ve so like va so dislike
+CREATE FUNCTION fCountLikeAndDislike(@maNhaTro int)
+	RETURNS @nhaTro table (maNha int,Likes int,Dislike int) 
+	AS
+	BEGIN
+	INSERT INTO @nhaTro 
+				SELECT maNhaTro, 
+				SUM(CASE WHEN danhGia = 1 THEN 1 ELSE 0 END) AS Likes,
+				SUM(CASE WHEN danhGia = 0 THEN 1 ELSE 0 END) AS Dislikes
+		FROM Danh_Gia
+		GROUP BY maNhaTro
+		HAVING maNhaTro = @maNhatro;
+	RETURN
+	END
+	GO
 --Tra ve danh gia cua nha tro
 CREATE PROCEDURE hienThiDanhGia
 	@maNhaTro int
@@ -356,3 +382,4 @@ EXEC xoaTheoKhoangThoiGianDang '1-1-2012','1-1-2014'
 SELECT * FROM top10Like
 SELECT * FROM Danh_Gia
 SELECT * FROM Nha_Tro
+SELECT * FROM fCountLikeAndDislike(1)
